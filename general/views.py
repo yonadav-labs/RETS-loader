@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 
 from general.models import *
+from general.serializers import *
 
 
 class PropertyViewSet(viewsets.ModelViewSet):

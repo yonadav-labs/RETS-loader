@@ -15,10 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from rest_framework import routers
+
+from general import views
 
 admin.site.site_header = "AgentCloud RETS Administrator"
 
+router = routers.DefaultRouter()
+router.register(r'property', views.PropertyViewSet, 'property')
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/', include('rest_framework.urls'))
+    url(r'^api-auth/', include('rest_framework.urls')),
+    url(r'^api/', include(router.urls)),
 ]
