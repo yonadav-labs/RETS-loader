@@ -17,9 +17,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 
+from rest_framework_swagger.views import get_swagger_view
+
 from general import views
 
 admin.site.site_header = "AgentCloud RETS Administrator"
+schema_view = get_swagger_view(title='AgentCloud RETS API')
 
 router = routers.DefaultRouter()
 router.register(r'property', views.PropertyViewSet, 'property')
@@ -28,4 +31,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^api/', include(router.urls)),
+    url(r'^$', schema_view)
 ]
