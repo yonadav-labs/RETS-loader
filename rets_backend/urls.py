@@ -26,6 +26,12 @@ schema_view = get_swagger_view(title='AgentCloud RETS API')
 
 router = routers.DefaultRouter()
 router.register(r'property', views.PropertyViewSet, 'property')
+router.register(r'property_attribute', views.PropertyAttributeViewSet, 'property_attribute')
+router.register(r'photo', views.PhotoViewSet, 'photo')
+router.register(r'mls_agent', views.MlsAgentViewSet, 'mls_agent')
+router.register(r'mls_office', views.MlsOfficeViewSet, 'mls_office')
+router.register(r'open_house', views.OpenHouseViewSet, 'open_house')
+router.register(r'property_room', views.PropertyRoomViewSet, 'property_room')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
