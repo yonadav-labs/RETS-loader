@@ -463,7 +463,7 @@ class PropertyAttribute(models.Model):
         db_table = 'property_attributes'
 
     def __str__(self):
-        return self.property
+        return self.property.id
 
 
 class Photo(models.Model):
@@ -485,7 +485,7 @@ class Photo(models.Model):
         db_table = 'photos'
 
     def __str__(self):
-        return self.property
+        return self.property.id
 
 
 class MlsAgent(models.Model):
@@ -662,7 +662,7 @@ class PropertyRoom(models.Model):
         db_table = 'property_rooms'
 
     def __str__(self):
-        return self.title
+        return self.property.id
 
 
 class WntDataProvHistory(models.Model):
