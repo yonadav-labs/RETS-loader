@@ -218,6 +218,7 @@ class Property(models.Model):
 
     class Meta:
         db_table = 'properties'
+        verbose_name_plural = 'properties'
 
     def __str__(self):
         return self.id

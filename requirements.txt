@@ -4,3 +4,4 @@ djangorestframework
 markdown
 django-filter
 django-rest-swagger
+py-postgresql
