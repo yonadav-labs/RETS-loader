@@ -216,6 +216,9 @@ class Property(models.Model):
     is_coop = models.CharField(max_length=1, blank=True, null=True)
     is_other = models.CharField(max_length=1, blank=True, null=True)
 
+    class Meta:
+        db_table = 'properties'
+
     def __str__(self):
         return self.id
 
@@ -455,6 +458,9 @@ class PropertyAttribute(models.Model):
     confidential_remarks = models.CharField(max_length=2000, blank=True, null=True)
     last_update_date = models.DateTimeField(blank=True, null=True)
 
+    class Meta:
+        db_table = 'property_attributes'
+
     def __str__(self):
         return self.property
 
@@ -475,6 +481,7 @@ class Photo(models.Model):
 
     class Meta:
         unique_together = ('property', 'display_order')
+        db_table = 'photos'
 
     def __str__(self):
         return self.property
@@ -525,6 +532,7 @@ class MlsAgent(models.Model):
 
     class Meta:
         unique_together = ('ma_id', 'ma_mo_id')
+        db_table = 'mls_agents'
 
 
 class MlsOffice(models.Model):
@@ -572,6 +580,9 @@ class MlsOffice(models.Model):
     mls_update_date = models.DateTimeField(blank=True, null=True)
     mls_create_date = models.DateTimeField(blank=True, null=True)
     hash_value = models.CharField(max_length=32, blank=True, null=True)
+
+    class Meta:
+        db_table = 'mls_offices'
 
 
 class OpenHouse(models.Model):
@@ -625,6 +636,9 @@ class OpenHouse(models.Model):
     properties_mls_id = models.CharField(max_length=255, blank=True, null=True)
     hash_value = models.CharField(max_length=32, blank=True, null=True)
 
+    class Meta:
+        db_table = 'open_house'
+
 
 class PropertyRoom(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
@@ -642,6 +656,9 @@ class PropertyRoom(models.Model):
     mls_id = models.CharField(max_length=255, blank=True, null=True)
     properties_mls_id = models.CharField(max_length=255, blank=True, null=True)
     hash_value = models.CharField(max_length=32, blank=True, null=True)
+
+    class Meta:
+        db_table = 'property_rooms'
 
     def __str__(self):
         return self.title
@@ -663,3 +680,6 @@ class WntDataProvHistory(models.Model):
     prov_end_time = models.DateTimeField(blank=True, null=True)
     prov_success = models.CharField(max_length=1, blank=True, null=True)
     prov_notes = models.CharField(max_length=2000, blank=True, null=True)
+
+    class Meta:
+        db_table = 'wnt_data_prov_history'
