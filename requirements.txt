@@ -5,3 +5,4 @@ markdown
 django-filter
 django-rest-swagger
 py-postgresql
+django-cors-headers
