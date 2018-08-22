@@ -6,7 +6,7 @@ class PropertySerializer(serializers.ModelSerializer):
     photos = serializers.SerializerMethodField()
 
     def get_photos(self, obj):
-        return PhotoSerializer(obj.photo_set.all(), many=True).data
+        return PhotoSerializer(obj.photos.all(), many=True).data
 
     class Meta:
         model = Property
