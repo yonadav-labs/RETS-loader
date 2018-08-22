@@ -29,14 +29,21 @@ class PropertyViewSet(viewsets.ModelViewSet):
     def search(self, request):
         page = int(request.GET.get('page', 1))
         page_size = int(request.GET.get('page_size', 50))
-        filters = request.data
-        q = Q()
-
-        for key, value in filters.items():
-            q &= Q(**{key: value})
-
         start = (page - 1) * page_size
         end = page * page_size
+        filters = request.data
+
+        if 'keyword' in filters:
+            value = filters['keyword']
+            q = Q(listing_agent_email__iexact=value) | \
+                Q(selling_agent_email__iexact=value) | \
+                Q(mls_id__icontains=value)
+        else:
+            q = Q()
+            for key, value in filters.items():
+                if not '__' in key:
+                    key = key + '__icontains'
+                q &= Q(**{key: value})
 
         qs = Property.objects.filter(q)[start:end]
         serializer = self.get_serializer(qs, many=True)
