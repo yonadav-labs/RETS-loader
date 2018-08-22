@@ -17,7 +17,7 @@ class FullPropertySerializer(serializers.ModelSerializer):
         return PhotoSerializer(obj.photos.all(), many=True).data
 
     def get_attributes(self, obj):
-        return PropertyAttributeSerializer(obj.attributes.all(), many=True).data
+        return PropertyAttributeSerializer(obj.attributes.first()).data
 
     def get_rooms(self, obj):
         return PropertyRoomSerializer(obj.rooms.all(), many=True).data
