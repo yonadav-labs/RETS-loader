@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.db.models import Q
 
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework.decorators import detail_route, list_route
 
 from general.models import *
 from general.serializers import *
@@ -22,6 +23,23 @@ class PropertyViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk, format=None):
         entity = self.get_object()
         serializer = FullPropertySerializer(entity)
+        return Response(serializer.data)
+
+    @list_route(methods=['POST'])
+    def search(self, request):
+        page = int(request.GET.get('page', 1))
+        page_size = int(request.GET.get('page_size', 50))
+        filters = request.data
+        q = Q()
+
+        for key, value in filters.items():
+            q &= Q(**{key: value})
+
+        start = (page - 1) * page_size
+        end = page * page_size
+
+        qs = Property.objects.filter(q)[start:end]
+        serializer = self.get_serializer(qs, many=True)
         return Response(serializer.data)
 
 
