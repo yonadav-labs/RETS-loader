@@ -18,6 +18,11 @@ class PropertyViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
     queryset = Property.objects.all()
 
+    def retrieve(self, request, pk, format=None):
+        entity = self.get_object()
+        serializer = FullPropertySerializer(entity)
+        return Response(serializer.data)
+
 
 class PropertyAttributeViewSet(viewsets.ModelViewSet):
     serializer_class = PropertyAttributeSerializer

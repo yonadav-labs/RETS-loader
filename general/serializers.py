@@ -3,21 +3,35 @@ from rest_framework import serializers
 from general.models import *
 
 class PropertySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Property
+        fields = ('__all__')
+
+
+class FullPropertySerializer(serializers.ModelSerializer):
     photos = serializers.SerializerMethodField()
+    attributes = serializers.SerializerMethodField()
+    # rooms = serializers.SerializerMethodField()
 
     def get_photos(self, obj):
         return PhotoSerializer(obj.photos.all(), many=True).data
 
+    def get_attributes(self, obj):
+        return PropertyAttributeSerializer(obj.attributes.all(), many=True).data
+
+    def get_rooms(self, obj):
+        return PropertyRoomSerializer(obj.rooms.all(), many=True).data
+
     class Meta:
         model = Property
         fields = ('__all__')
-        read_only_fields = ['photos']
+        read_only_fields = ('photos', 'attributes')
 
 
 class PropertyAttributeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropertyAttribute
-        fields = ('__all__')
+        fields = ('remarks', 'confidential_remarks', 'additional_remarks')
 
 
 class PhotoSerializer(serializers.ModelSerializer):
