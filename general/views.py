@@ -47,7 +47,11 @@ class PropertyViewSet(viewsets.ModelViewSet):
 
         qs = Property.objects.filter(q)[start:end]
         serializer = self.get_serializer(qs, many=True)
-        return Response(serializer.data)
+
+        return Response({
+            'count': Property.objects.filter(q).count(),
+            'results': serializer.data
+        })
 
 
 class PropertyAttributeViewSet(viewsets.ModelViewSet):
