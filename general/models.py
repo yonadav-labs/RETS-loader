@@ -225,7 +225,7 @@ class Property(models.Model):
 
 
 class PropertyAttribute(models.Model):
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="attributes")
     additional_features = models.CharField(max_length=500, blank=True, null=True)
     additional_remarks = models.CharField(max_length=2000, blank=True, null=True)
     additional_water_features = models.CharField(max_length=500, blank=True, null=True)
@@ -467,7 +467,7 @@ class PropertyAttribute(models.Model):
 
 
 class Photo(models.Model):
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="photos")
     photo_filename = models.CharField(max_length=128, blank=True, null=True)
     photo_url = models.CharField(max_length=255, blank=True, null=True)
     thumbnail_url = models.CharField(max_length=255, blank=True, null=True)
@@ -642,7 +642,7 @@ class OpenHouse(models.Model):
 
 
 class PropertyRoom(models.Model):
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="rooms")
     room_label = models.CharField(max_length=255, blank=True, null=True)
     room_level = models.CharField(max_length=50, blank=True, null=True)
     room_dimensions = models.CharField(max_length=50, blank=True, null=True)
