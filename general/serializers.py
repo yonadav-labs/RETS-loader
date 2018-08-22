@@ -3,9 +3,15 @@ from rest_framework import serializers
 from general.models import *
 
 class PropertySerializer(serializers.ModelSerializer):
+    photos = serializers.SerializerMethodField()
+
+    def get_photos(self, obj):
+        return PhotoSerializer(obj.photo_set.all(), many=True).data
+
     class Meta:
         model = Property
         fields = ('__all__')
+        read_only_fields = ['photos']
 
 
 class PropertyAttributeSerializer(serializers.ModelSerializer):
@@ -17,7 +23,7 @@ class PropertyAttributeSerializer(serializers.ModelSerializer):
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
-        fields = ('__all__')
+        fields = ['photo_url', 'thumbnail_url', 'display_order', 'caption']
 
 
 class MlsAgentSerializer(serializers.ModelSerializer):
