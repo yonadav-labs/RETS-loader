@@ -35,9 +35,11 @@ class PropertyViewSet(viewsets.ModelViewSet):
 
         if 'keyword' in filters:
             value = filters['keyword']
-            q = Q(listing_agent_email__iexact=value) | \
-                Q(selling_agent_email__iexact=value) | \
-                Q(mls_id__icontains=value)
+            filters = ['display_address', 'city', 'state', 'state_prov_fullname', 'zip_code', 
+                       'mls_id', 'street_name', 'street_number', 'street_type', 'display_mlsnumber']
+            q = Q()
+            for ii in filters:
+                q |= Q(**{ii+'__icontains': value})
         else:
             q = Q()
             for key, value in filters.items():
